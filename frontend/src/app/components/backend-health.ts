@@ -13,6 +13,12 @@ interface Probe {
  *
  * The runtime probe is the check the Angular quickstart's troubleshooting box
  * prescribes: `/api/copilotkit/info` should report the registered agents.
+ *
+ * Both probes are ordinary cross-origin fetches, which means both servers have
+ * to send CORS headers: the runtime through `cors: true` in server.ts, the
+ * agent through the CORSMiddleware in backend/main.py. Drop the middleware and
+ * this probe goes red while the chat keeps working — the browser never calls
+ * the agent, the runtime does, server-side, where CORS does not apply.
  */
 @Component({
   selector: 'app-backend-health',

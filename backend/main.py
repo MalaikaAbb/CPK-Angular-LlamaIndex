@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from llama_index.llms.openai import OpenAI
 from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
 
@@ -22,6 +23,22 @@ app = FastAPI(
     title="LlamaIndex Agent",
     description="A LlamaIndex agent integrated with CopilotKit",
     version="1.0.0"
+)
+
+# Allow the Angular app to call this server from the browser.
+#
+# The chat does not need this: the browser only ever talks to the Copilot
+# Runtime, which reaches this agent server-side, where CORS does not apply.
+# It is here so the harness's connection check can read `GET /health` directly
+# and report a real status code instead of an opaque reachable / not.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:4200",  # ng serve
+        "http://localhost:4000",  # SSR build — npm run serve:ssr:frontend
+    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Include the router
