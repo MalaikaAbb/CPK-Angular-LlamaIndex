@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "docsRoot": "https://docs.copilotkit.ai/angular/llamaindex",
+  "syncedAt": "2026-08-18T06:54:14.793Z",
+  "pages": {
+    "/angular/llamaindex": {
+      "file": "angular__llamaindex.md",
+      "sha256": "1b3019699ee30c299687a2212dad25516496811aa5618d9cd2fb11296d330058",
+      "bytes": 6733,
+      "lines": 172,
+      "routes": [
+        "/",
+        "/doc-sync"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/a2ui": {
+      "file": "angular__llamaindex__guides__a2ui.md",
+      "sha256": "f3930ed1e7f85f7fe4dd459044feaa7c2ee5b29bc23259cd8bbfd16a5a5684dd",
+      "bytes": 5849,
+      "lines": 195,
+      "routes": [
+        "/a2ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/chat-ui": {
+      "file": "angular__llamaindex__guides__chat-ui.md",
+      "sha256": "eeb1fcd5af41e67ec942ef62c767077cc2187071f182e19d7c4c846e7d53b1f7",
+      "bytes": 5137,
+      "lines": 178,
+      "routes": [
+        "/chat-ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/frontend-tools-generative-ui": {
+      "file": "angular__llamaindex__guides__frontend-tools-generative-ui.md",
+      "sha256": "8dbd91beb4158cd5d8172ed21b13cc5c916c403d32170f66c8731b5b14a9ebb7",
+      "bytes": 5732,
+      "lines": 178,
+      "routes": [
+        "/frontend-tools-generative-ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/human-in-the-loop": {
+      "file": "angular__llamaindex__guides__human-in-the-loop.md",
+      "sha256": "4aeffe8a47d5c992bcc3f94f3128ec582076c458ad10d7a63aa31d54af1c9e85",
+      "bytes": 7176,
+      "lines": 227,
+      "routes": [
+        "/human-in-the-loop"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/shared-state": {
+      "file": "angular__llamaindex__guides__shared-state.md",
+      "sha256": "9a160c961818e26a25a40a89009fc0dc91f99fff1518ac377669cf4e79688b83",
+      "bytes": 4726,
+      "lines": 151,
+      "routes": [
+        "/shared-state"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/threads-memory-attachments-headless": {
+      "file": "angular__llamaindex__guides__threads-memory-attachments-headless.md",
+      "sha256": "13961c7abd487d2314ba6ddd212070d3efa583623ba704ed91b8a5121659327e",
+      "bytes": 8940,
+      "lines": 302,
+      "routes": [
+        "/threads",
+        "/memory",
+        "/attachments",
+        "/headless"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/guides/voice-multimodal": {
+      "file": "angular__llamaindex__guides__voice-multimodal.md",
+      "sha256": "fd830e366866c7237b3365c2dc83ed0618601a630eb5de899e82fcae4db00ac5",
+      "bytes": 3794,
+      "lines": 111,
+      "routes": [
+        "/voice-multimodal"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    },
+    "/angular/llamaindex/quickstart": {
+      "file": "angular__llamaindex__quickstart.md",
+      "sha256": "1b3019699ee30c299687a2212dad25516496811aa5618d9cd2fb11296d330058",
+      "bytes": 6733,
+      "lines": 172,
+      "routes": [
+        "/quickstart"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Tue, 18 Aug 2026 06:54:15 GMT"
+    }
+  },
+  "sitemap": {
+    "fetchedAt": "2026-08-18T06:54:14.793Z",
+    "urlsUnderRoot": 4,
+    "knownUnmapped": [
+      "https://docs.copilotkit.ai/angular/llamaindex/ag-ui",
+      "https://docs.copilotkit.ai/angular/llamaindex/copilot-runtime",
+      "https://docs.copilotkit.ai/angular/llamaindex/shared-state/workflow-execution"
+    ]
+  }
+}
