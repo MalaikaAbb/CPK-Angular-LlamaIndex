@@ -107,7 +107,7 @@ export const NAV: NavGroup[] = [
         title: 'Frontend tools and generative UI',
         docPath: '/angular/llamaindex/guides/frontend-tools-generative-ui',
         summary:
-          'A server-side tool call rendered by an Angular component, plus the sandboxed Open Generative UI path.',
+          'A server-side tool call rendered by an Angular component, a display-only component the agent calls to show it, plus the sandboxed Open Generative UI path.',
         status: 'partial',
       },
       {
