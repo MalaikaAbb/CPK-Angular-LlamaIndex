@@ -202,6 +202,22 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
+    title: 'WebMCP',
+    routes: [
+      {
+        path: '/webmcp',
+        hasDemo: true,
+        title: 'WebMCP',
+        docPath: '/angular/llamaindex/webmcp',
+        summary:
+          'A frontend tool opted into WebMCP, so the same handler is callable by the CopilotKit agent and by browser agents through document.modelContext.',
+        status: 'partial',
+        statusNote:
+          'The CopilotKit-agent path runs in any browser. The browser-agent path needs Chrome 149+ with the WebMCP origin trial or the chrome://flags/#enable-webmcp-testing flag; elsewhere document.modelContext is absent and WebMCP registration is a no-op. The page also never defines the searchOrders its samples call — see Doc gaps on this route.',
+      },
+    ],
+  },
+  {
     title: 'Doc Sync',
     routes: [
       {

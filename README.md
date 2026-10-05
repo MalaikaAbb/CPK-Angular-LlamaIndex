@@ -141,6 +141,7 @@ in `frontend/src/app/app.config.ts`; change it there if you move the runtime.
 | `/memory` | Partial | Needs an Enterprise Intelligence license. |
 | `/attachments` | Working | |
 | `/headless` | Working | |
+| `/webmcp` | Partial | Agent path runs anywhere; browser-agent path needs Chrome 149+ with WebMCP enabled. See the WebMCP notes below. |
 
 ## Known issues
 
@@ -179,6 +180,29 @@ headless. The backend runs the stock workflow from
 `get_ag_ui_workflow_router`, which never emits an AG-UI interrupt, so that half
 of the human-in-the-loop route stays idle.
 
+**WebMCP's samples call an undefined `searchOrders`.**
+[WebMCP](https://docs.copilotkit.ai/angular/llamaindex/webmcp). Both samples
+call `searchOrders(status)` and neither defines it. The Angular sample in
+`frontend/src/app/features/webmcp/order-search.component.ts` is verbatim, with
+a stub appended below it and marked `DOC GAP FILL`: it filters four in-memory
+orders, so it stays read-only to match the sample's `readOnlyHint: true`. The
+sample also sets `standalone: true`, which this repo's AGENTS.md says to omit;
+it is kept as published.
+
+**WebMCP's "no agent" sample is reference only.** The page's second sample
+builds its own `CopilotKitCore` for apps without a framework provider. This app
+has one, so mounting the sample would register a second `searchOrders`, and
+the page says CopilotKit then exposes only the first and logs a warning. It
+also imports `@copilotkit/core`, which `frontend/package.json` does not declare
+(it is only present as a dependency of `@copilotkit/angular`). The route shows
+it as code and does not run it.
+
+**WebMCP needs a browser that implements it.** `document.modelContext` exists
+only in Chrome 149+ with the WebMCP origin trial or
+`chrome://flags/#enable-webmcp-testing`. Elsewhere CopilotKit skips the WebMCP
+registration silently, so only the CopilotKit-agent half of `/webmcp` can be
+tested. The demo shows which case applies.
+
 ## Other frontend commands
 
 ```bash
@@ -189,7 +213,7 @@ npm run serve:ssr:frontend   # run the SSR build from dist/
 
 ## Doc drift detection
 
-`/doc-sync` keeps this repo honest about the docs it mirrors. Press **Sync docs now** (on the landing page or on `/doc-sync`) and it fetches the markdown source behind all 9 tracked doc pages, diffs each against the copy stored in `doc-snapshot/`, replaces that copy, and reports what moved — ranked by whether the change can actually break an implementation.
+`/doc-sync` keeps this repo honest about the docs it mirrors. Press **Sync docs now** (on the landing page or on `/doc-sync`) and it fetches the markdown source behind all 10 tracked doc pages, diffs each against the copy stored in `doc-snapshot/`, replaces that copy, and reports what moved — ranked by whether the change can actually break an implementation.
 
 Doc pages are fetched by appending `.md` to their URL, which returns the authored MDX rather than the rendered HTML. Every response is checked for `text/markdown` before it is allowed near the snapshot: a URL that misses the markdown handler still answers `200` with the HTML app shell, and writing that in would destroy the baseline. A run commits all pages or none.
 

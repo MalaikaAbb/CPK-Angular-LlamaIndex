@@ -22,6 +22,7 @@ import { QuickstartChat } from '../features/quickstart/quickstart-chat';
 import { SharedStateChatComponent } from '../features/shared-state/shared-state-chat.component';
 import { ThreadsDemoComponent } from '../features/threads/threads-demo.component';
 import { ToolsChatComponent } from '../features/tools/tools-chat.component';
+import { WebmcpChatComponent } from '../features/webmcp/webmcp-chat.component';
 
 @Component({
   selector: 'app-quickstart-demo',
@@ -120,3 +121,12 @@ export class AttachmentsDemo {}
   ></app-demo-frame>`,
 })
 export class HeadlessDemo {}
+
+@Component({
+  selector: 'app-webmcp-demo',
+  imports: [DemoFrame, WebmcpChatComponent],
+  template: `<app-demo-frame backTo="/webmcp"
+    ><app-webmcp-chat
+  /></app-demo-frame>`,
+})
+export class WebmcpDemo {}

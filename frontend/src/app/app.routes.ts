@@ -53,6 +53,10 @@ export const routes: Routes = [
     path: 'headless/demo',
     loadComponent: () => import('./pages/demos').then((m) => m.HeadlessDemo),
   },
+  {
+    path: 'webmcp/demo',
+    loadComponent: () => import('./pages/demos').then((m) => m.WebmcpDemo),
+  },
 
   // Doc routes, inside the sidebar chrome.
   {
@@ -86,6 +90,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/attachments'),
       },
       { path: 'headless', loadComponent: () => import('./pages/headless') },
+      { path: 'webmcp', loadComponent: () => import('./pages/webmcp') },
       { path: 'status', loadComponent: () => import('./pages/status') },
       { path: 'doc-sync', loadComponent: () => import('./pages/doc-sync') },
       { path: '**', redirectTo: '' },
