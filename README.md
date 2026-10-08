@@ -21,11 +21,13 @@ Browser (Angular 22, zoneless)  ·  localhost:4200
   |  POST http://localhost:8201/api/copilotkit
   v
 Copilot Runtime  ·  localhost:8201        <- Node, frontend/server.ts
-  |  agents: { default, support } -> new LlamaIndexAgent({ url })
-  |  POST http://localhost:8000/run       <- AG-UI over SSE
+  |  agents: { default, support, subagents } -> new LlamaIndexAgent({ url })
+  |  POST http://localhost:8000/run       <- AG-UI over SSE (default, support)
+  |  POST http://localhost:8000/subagents/run              (subagents)
   v
 LlamaIndex  ·  localhost:8000             <- Python / FastAPI, backend/main.py
   |  app.include_router(get_ag_ui_workflow_router(...))
+  |  app.include_router(subagents_router, prefix="/subagents")
   v
 OpenAI
 ```
@@ -94,7 +96,7 @@ The Introduction route (`/`) has a live connection check that probes both
 processes. The same two checks by hand:
 
 ```bash
-curl http://localhost:8201/api/copilotkit/info   # should list agents: default, support
+curl http://localhost:8201/api/copilotkit/info   # should list agents: default, support, subagents
 curl http://localhost:8000/health                # {"status":"healthy","agent":"llamaindex"}
 ```
 
@@ -120,6 +122,8 @@ is wrong, not the agent.
 | --- | --- | --- |
 | `OPENAI_API_KEY` | — (required) | `backend/main.py` |
 | `LLAMAINDEX_AGENT_URL` | `http://localhost:8000/run` | `frontend/server.ts` |
+| `LLAMAINDEX_SUBAGENTS_URL` | `http://localhost:8000/subagents/run` | `frontend/server.ts` |
+| `OPENAI_BASE_URL` | — (optional) | `backend/subagents_agent.py` — passed as `api_base` when set |
 | `PORT` | `8201` | `frontend/server.ts` |
 
 The browser's `runtimeUrl` is hardcoded to `http://localhost:8201/api/copilotkit`
@@ -141,6 +145,7 @@ in `frontend/src/app/app.config.ts`; change it there if you move the runtime.
 | `/memory` | Partial | Needs an Enterprise Intelligence license. |
 | `/attachments` | Working | |
 | `/headless` | Working | |
+| `/subagents` | Partial | Implemented as published; not yet verified end to end. See the Sub-Agents doc gaps below. |
 
 ## Known issues
 
@@ -179,6 +184,31 @@ headless. The backend runs the stock workflow from
 `get_ag_ui_workflow_router`, which never emits an AG-UI interrupt, so that half
 of the human-in-the-loop route stays idle.
 
+**Sub-Agents prints fragments on both sides.**
+[Sub-Agents](https://docs.copilotkit.ai/angular/llamaindex/multi-agent/subagents).
+The Python samples call `_stringify_outcome`, which is never defined, and never
+build the supervisor router they import `get_ag_ui_workflow_router` for; the
+"Setting up sub-agents" section is empty for LlamaIndex. The complete file is
+in the Code tab of the page's interactive demo, and
+`backend/subagents_agent.py` is that file byte for byte. The TypeScript sample
+is a fragment of the Angular Showcase's `agent-state-feature.component.ts`:
+`readDelegations`, `SubAgentName`, `subAgentRendererConfig`, `this.agentId`
+and `this.feature` are never defined and no template is shown. The demo's
+Code tab is the React demo, so the three helper files in
+`frontend/src/app/features/subagents/` are copied from the Angular Showcase on
+GitHub, each marked `DOC GAP FILL`; `agentId` and `feature` are the literal
+`'subagents'`.
+
+**Sub-Agents hardcodes `gpt-5-mini`.** `backend/subagents_agent.py` uses
+`OpenAI(model="gpt-5-mini")` for the supervisor and all three sub-agents,
+independent of the `gpt-5.4` in `backend/main.py`.
+
+**The delegation log only lists finished delegations.** The backend writes a
+`running` entry before each sub-agent call, then marks it `completed` or
+`failed`. The showcase's `readDelegations` drops every entry that is not
+`completed`, so in-flight work appears only as the in-chat activity card and a
+failed delegation never appears in the log.
+
 ## Other frontend commands
 
 ```bash
@@ -189,7 +219,7 @@ npm run serve:ssr:frontend   # run the SSR build from dist/
 
 ## Doc drift detection
 
-`/doc-sync` keeps this repo honest about the docs it mirrors. Press **Sync docs now** (on the landing page or on `/doc-sync`) and it fetches the markdown source behind all 9 tracked doc pages, diffs each against the copy stored in `doc-snapshot/`, replaces that copy, and reports what moved — ranked by whether the change can actually break an implementation.
+`/doc-sync` keeps this repo honest about the docs it mirrors. Press **Sync docs now** (on the landing page or on `/doc-sync`) and it fetches the markdown source behind all 10 tracked doc pages, diffs each against the copy stored in `doc-snapshot/`, replaces that copy, and reports what moved — ranked by whether the change can actually break an implementation.
 
 Doc pages are fetched by appending `.md` to their URL, which returns the authored MDX rather than the rendered HTML. Every response is checked for `text/markdown` before it is allowed near the snapshot: a URL that misses the markdown handler still answers `200` with the HTML app shell, and writing that in would destroy the baseline. A run commits all pages or none.
 

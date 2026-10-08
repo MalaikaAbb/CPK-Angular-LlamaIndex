@@ -53,6 +53,10 @@ export const routes: Routes = [
     path: 'headless/demo',
     loadComponent: () => import('./pages/demos').then((m) => m.HeadlessDemo),
   },
+  {
+    path: 'subagents/demo',
+    loadComponent: () => import('./pages/demos').then((m) => m.SubagentsDemo),
+  },
 
   // Doc routes, inside the sidebar chrome.
   {
@@ -86,6 +90,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/attachments'),
       },
       { path: 'headless', loadComponent: () => import('./pages/headless') },
+      { path: 'subagents', loadComponent: () => import('./pages/subagents') },
       { path: 'status', loadComponent: () => import('./pages/status') },
       { path: 'doc-sync', loadComponent: () => import('./pages/doc-sync') },
       { path: '**', redirectTo: '' },

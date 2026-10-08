@@ -20,6 +20,7 @@ import { MemoryDemoComponent } from '../features/memory/memory-demo.component';
 import { VoiceChatComponent } from '../features/media/voice-chat.component';
 import { QuickstartChat } from '../features/quickstart/quickstart-chat';
 import { SharedStateChatComponent } from '../features/shared-state/shared-state-chat.component';
+import { SubagentsChatComponent } from '../features/subagents/subagents-chat.component';
 import { ThreadsDemoComponent } from '../features/threads/threads-demo.component';
 import { ToolsChatComponent } from '../features/tools/tools-chat.component';
 
@@ -120,3 +121,12 @@ export class AttachmentsDemo {}
   ></app-demo-frame>`,
 })
 export class HeadlessDemo {}
+
+@Component({
+  selector: 'app-subagents-demo',
+  imports: [DemoFrame, SubagentsChatComponent],
+  template: `<app-demo-frame backTo="/subagents"
+    ><app-subagents-chat
+  /></app-demo-frame>`,
+})
+export class SubagentsDemo {}
