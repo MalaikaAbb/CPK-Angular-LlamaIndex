@@ -56,6 +56,8 @@ export const routes: Routes = [
   {
     path: 'webmcp/demo',
     loadComponent: () => import('./pages/demos').then((m) => m.WebmcpDemo),
+  },
+  {
     path: 'subagents/demo',
     loadComponent: () => import('./pages/demos').then((m) => m.SubagentsDemo),
   },

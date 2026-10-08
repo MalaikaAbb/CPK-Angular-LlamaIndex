@@ -214,6 +214,10 @@ export const NAV: NavGroup[] = [
         status: 'partial',
         statusNote:
           'The CopilotKit-agent path runs in any browser. The browser-agent path needs Chrome 149+ with the WebMCP origin trial or the chrome://flags/#enable-webmcp-testing flag; elsewhere document.modelContext is absent and WebMCP registration is a no-op. The page also never defines the searchOrders its samples call — see Doc gaps on this route.',
+      },
+    ],
+  },
+  {
     title: 'Sub-agents',
     routes: [
       {

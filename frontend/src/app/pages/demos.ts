@@ -131,6 +131,8 @@ export class HeadlessDemo {}
   /></app-demo-frame>`,
 })
 export class WebmcpDemo {}
+
+@Component({
   selector: 'app-subagents-demo',
   imports: [DemoFrame, SubagentsChatComponent],
   template: `<app-demo-frame backTo="/subagents"
