@@ -3,6 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from llama_index.llms.openai import OpenAI
 from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
 
+# Sub-agents supervisor, verbatim from the Code tab of the interactive demo on
+# https://docs.copilotkit.ai/angular/llamaindex/multi-agent/subagents
+from subagents_agent import subagents_router
+
 # Initialize the LLM
 llm = OpenAI(model="gpt-5.4")
 
@@ -43,6 +47,11 @@ app.add_middleware(
 
 # Include the router
 app.include_router(agentic_chat_router)
+
+# The router always registers `POST /run`, so the supervisor needs its own
+# prefix: `POST /subagents/run`. The docs never show the mounting server; this
+# prefix is the one the runtime's `subagents` agent in frontend/server.ts names.
+app.include_router(subagents_router, prefix="/subagents")
 
 # Health check endpoint
 @app.get("/health")

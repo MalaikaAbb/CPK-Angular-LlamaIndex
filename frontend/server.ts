@@ -17,6 +17,10 @@
  * `support` exists so the doc snippets that use `agentId="support"` (Chat UI,
  * Threads) run verbatim.
  *
+ * `subagents` is a separate LlamaIndex router — the supervisor from the
+ * Sub-Agents page — mounted by backend/main.py at `/subagents`, so its
+ * `delegations` state never mixes with the `default` agent's.
+ *
  * `a2ui: {}` enables A2UIMiddleware for every registered agent, per
  * https://docs.copilotkit.ai/angular/llamaindex/guides/a2ui
  * — it is a runtime-side middleware and is independent of which agent binding
@@ -33,10 +37,16 @@ import { LlamaIndexAgent } from "@ag-ui/llamaindex";
 const agentUrl =
   process.env["LLAMAINDEX_AGENT_URL"] ?? "http://localhost:8000/run";
 
+// The Sub-Agents supervisor, mounted by backend/main.py at `/subagents`.
+const subagentsUrl =
+  process.env["LLAMAINDEX_SUBAGENTS_URL"] ??
+  "http://localhost:8000/subagents/run";
+
 const runtime = new CopilotRuntime({
   agents: {
     default: new LlamaIndexAgent({ url: agentUrl }),
     support: new LlamaIndexAgent({ url: agentUrl }),
+    subagents: new LlamaIndexAgent({ url: subagentsUrl }),
   },
   a2ui: {},
 });

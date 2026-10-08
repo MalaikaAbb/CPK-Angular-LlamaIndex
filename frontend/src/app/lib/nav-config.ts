@@ -214,6 +214,18 @@ export const NAV: NavGroup[] = [
         status: 'partial',
         statusNote:
           'The CopilotKit-agent path runs in any browser. The browser-agent path needs Chrome 149+ with the WebMCP origin trial or the chrome://flags/#enable-webmcp-testing flag; elsewhere document.modelContext is absent and WebMCP registration is a no-op. The page also never defines the searchOrders its samples call — see Doc gaps on this route.',
+    title: 'Sub-agents',
+    routes: [
+      {
+        path: '/subagents',
+        hasDemo: true,
+        title: 'Sub-agents',
+        docPath: '/angular/llamaindex/multi-agent/subagents',
+        summary:
+          'A LlamaIndex supervisor that delegates to research, writing, and critique FunctionAgents exposed as tools, with every delegation written to shared state and rendered as a live log.',
+        status: 'partial',
+        statusNote:
+          'Implemented as published, not yet verified end to end. The page prints fragments on both sides: the Python never builds the supervisor router and calls an undefined _stringify_outcome; the TypeScript is part of a class whose helpers are never shown. The missing pieces come from the sources the page itself names — see Doc gaps on this route.',
       },
     ],
   },
