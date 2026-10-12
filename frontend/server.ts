@@ -42,11 +42,21 @@ const subagentsUrl =
   process.env["LLAMAINDEX_SUBAGENTS_URL"] ??
   "http://localhost:8000/subagents/run";
 
+// The Workflow Execution agent, mounted by backend/main.py at
+// `/workflow-execution`.
+const workflowExecutionUrl =
+  process.env["LLAMAINDEX_WORKFLOW_EXECUTION_URL"] ??
+  "http://localhost:8000/workflow-execution/run";
+
 const runtime = new CopilotRuntime({
   agents: {
     default: new LlamaIndexAgent({ url: agentUrl }),
     support: new LlamaIndexAgent({ url: agentUrl }),
     subagents: new LlamaIndexAgent({ url: subagentsUrl }),
+    // The name the Workflow Execution guide's component asks for. It points at
+    // the guide's agent, mounted by backend/main.py at `/workflow-execution`.
+    // https://docs.copilotkit.ai/angular/llamaindex/shared-state/workflow-execution
+    my_agent: new LlamaIndexAgent({ url: workflowExecutionUrl }),
   },
   a2ui: {},
 });

@@ -21,6 +21,7 @@ import { VoiceChatComponent } from '../features/media/voice-chat.component';
 import { QuickstartChat } from '../features/quickstart/quickstart-chat';
 import { SharedStateChatComponent } from '../features/shared-state/shared-state-chat.component';
 import { SubagentsChatComponent } from '../features/subagents/subagents-chat.component';
+import { AgentStateComponent } from '../features/workflow-execution/agent-state.component';
 import { ThreadsDemoComponent } from '../features/threads/threads-demo.component';
 import { ToolsChatComponent } from '../features/tools/tools-chat.component';
 import { WebmcpChatComponent } from '../features/webmcp/webmcp-chat.component';
@@ -140,3 +141,12 @@ export class WebmcpDemo {}
   /></app-demo-frame>`,
 })
 export class SubagentsDemo {}
+
+@Component({
+  selector: 'app-workflow-execution-demo',
+  imports: [DemoFrame, AgentStateComponent],
+  template: `<app-demo-frame backTo="/workflow-execution"
+    ><app-agent-state
+  /></app-demo-frame>`,
+})
+export class WorkflowExecutionDemo {}
