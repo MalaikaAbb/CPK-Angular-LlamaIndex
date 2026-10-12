@@ -7,6 +7,10 @@ from llama_index.protocols.ag_ui.router import get_ag_ui_workflow_router
 # https://docs.copilotkit.ai/angular/llamaindex/multi-agent/subagents
 from subagents_agent import subagents_router
 
+# Workflow Execution agent, verbatim from
+# https://docs.copilotkit.ai/angular/llamaindex/shared-state/workflow-execution
+from workflow_execution_agent import agentic_chat_router as workflow_execution_router
+
 # Initialize the LLM
 llm = OpenAI(model="gpt-5.4")
 
@@ -52,6 +56,12 @@ app.include_router(agentic_chat_router)
 # prefix: `POST /subagents/run`. The docs never show the mounting server; this
 # prefix is the one the runtime's `subagents` agent in frontend/server.ts names.
 app.include_router(subagents_router, prefix="/subagents")
+
+# The guide runs its agent as its own server; here it shares this one, so it
+# takes a prefix the same way: `POST /workflow-execution/run`. The runtime's
+# `my_agent` in frontend/server.ts — the name the guide's component asks for —
+# points at it.
+app.include_router(workflow_execution_router, prefix="/workflow-execution")
 
 # Health check endpoint
 @app.get("/health")

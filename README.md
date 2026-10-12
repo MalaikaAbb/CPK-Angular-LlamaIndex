@@ -21,13 +21,15 @@ Browser (Angular 22, zoneless)  ·  localhost:4200
   |  POST http://localhost:8201/api/copilotkit
   v
 Copilot Runtime  ·  localhost:8201        <- Node, frontend/server.ts
-  |  agents: { default, support, subagents } -> new LlamaIndexAgent({ url })
+  |  agents: { default, support, subagents, my_agent } -> new LlamaIndexAgent({ url })
   |  POST http://localhost:8000/run       <- AG-UI over SSE (default, support)
   |  POST http://localhost:8000/subagents/run              (subagents)
+  |  POST http://localhost:8000/workflow-execution/run     (my_agent)
   v
 LlamaIndex  ·  localhost:8000             <- Python / FastAPI, backend/main.py
   |  app.include_router(get_ag_ui_workflow_router(...))
   |  app.include_router(subagents_router, prefix="/subagents")
+  |  app.include_router(workflow_execution_router, prefix="/workflow-execution")
   v
 OpenAI
 ```
@@ -96,7 +98,7 @@ The Introduction route (`/`) has a live connection check that probes both
 processes. The same two checks by hand:
 
 ```bash
-curl http://localhost:8201/api/copilotkit/info   # should list agents: default, support, subagents
+curl http://localhost:8201/api/copilotkit/info   # should list agents: default, support, subagents, my_agent
 curl http://localhost:8000/health                # {"status":"healthy","agent":"llamaindex"}
 ```
 
@@ -123,6 +125,7 @@ is wrong, not the agent.
 | `OPENAI_API_KEY` | — (required) | `backend/main.py` |
 | `LLAMAINDEX_AGENT_URL` | `http://localhost:8000/run` | `frontend/server.ts` |
 | `LLAMAINDEX_SUBAGENTS_URL` | `http://localhost:8000/subagents/run` | `frontend/server.ts` |
+| `LLAMAINDEX_WORKFLOW_EXECUTION_URL` | `http://localhost:8000/workflow-execution/run` | `frontend/server.ts` |
 | `OPENAI_BASE_URL` | — (optional) | `backend/subagents_agent.py` — passed as `api_base` when set |
 | `PORT` | `8201` | `frontend/server.ts` |
 
@@ -147,6 +150,7 @@ in `frontend/src/app/app.config.ts`; change it there if you move the runtime.
 | `/headless` | Working | |
 | `/webmcp` | Partial | Agent path runs anywhere; browser-agent path needs Chrome 149+ with WebMCP enabled. See the WebMCP notes below. |
 | `/subagents` | Partial | Implemented as published; not yet verified end to end. See the Sub-Agents doc gaps below. |
+| `/workflow-execution` | Partial | Routing and state verified; the `answerQuestion` path is unverified (test run stopped on an invalid OpenAI key). Served as `my_agent` from `/workflow-execution` on the existing server, not the guide's standalone app. |
 
 ## Known issues
 

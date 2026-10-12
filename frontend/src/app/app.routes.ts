@@ -58,6 +58,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/demos').then((m) => m.WebmcpDemo),
   },
   {
+    path: 'workflow-execution/demo',
+    loadComponent: () =>
+      import('./pages/demos').then((m) => m.WorkflowExecutionDemo),
+  },
+  {
     path: 'subagents/demo',
     loadComponent: () => import('./pages/demos').then((m) => m.SubagentsDemo),
   },
@@ -96,6 +101,10 @@ export const routes: Routes = [
       { path: 'headless', loadComponent: () => import('./pages/headless') },
       { path: 'webmcp', loadComponent: () => import('./pages/webmcp') },
       { path: 'subagents', loadComponent: () => import('./pages/subagents') },
+      {
+        path: 'workflow-execution',
+        loadComponent: () => import('./pages/workflow-execution'),
+      },
       { path: 'status', loadComponent: () => import('./pages/status') },
       { path: 'doc-sync', loadComponent: () => import('./pages/doc-sync') },
       { path: '**', redirectTo: '' },

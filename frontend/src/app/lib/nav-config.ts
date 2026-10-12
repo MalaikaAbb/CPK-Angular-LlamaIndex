@@ -234,6 +234,22 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
+    title: 'Shared state',
+    routes: [
+      {
+        path: '/workflow-execution',
+        hasDemo: true,
+        title: 'Workflow execution',
+        docPath: '/angular/llamaindex/shared-state/workflow-execution',
+        summary:
+          'An agent whose state splits into question (set by the UI), answer (returned to it), and resources (kept inside the agent).',
+        status: 'partial',
+        statusNote:
+          'Routing and state are verified: the agent receives the question from frontend state. The answerQuestion path is not yet verified end to end — the test run stopped on an invalid OpenAI key.',
+      },
+    ],
+  },
+  {
     title: 'Doc Sync',
     routes: [
       {
