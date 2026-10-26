@@ -30,7 +30,7 @@
  * either side with PORT / LLAMAINDEX_AGENT_URL.
  */
 import { createServer } from "node:http";
-import { CopilotRuntime } from "@copilotkit/runtime/v2";
+import { CopilotKitIntelligence, CopilotRuntime } from "@copilotkit/runtime/v2";
 import { createCopilotNodeListener } from "@copilotkit/runtime/v2/node";
 import { LlamaIndexAgent } from "@ag-ui/llamaindex";
 
@@ -48,6 +48,17 @@ const workflowExecutionUrl =
   process.env["LLAMAINDEX_WORKFLOW_EXECUTION_URL"] ??
   "http://localhost:8000/workflow-execution/run";
 
+// Create the Intelligence client with your project API key. Keep this key on the server.
+const intelligence = new CopilotKitIntelligence({
+  apiKey: process.env["CPK_INTELLIGENCE_API_KEY"]!,
+});
+
+async function authenticateApplicationUser(
+  _request: Request,
+): Promise<{ id: string; name: string } | null> {
+  return { id: "local-user", name: "Local user" };
+}
+
 const runtime = new CopilotRuntime({
   agents: {
     default: new LlamaIndexAgent({ url: agentUrl }),
@@ -59,6 +70,13 @@ const runtime = new CopilotRuntime({
     my_agent: new LlamaIndexAgent({ url: workflowExecutionUrl }),
   },
   a2ui: {},
+  intelligence,
+  // Identify the user from a verified session or token
+  identifyUser: async (request) => {
+    const user = await authenticateApplicationUser(request);
+    if (!user) throw new Error("Unauthorized");
+    return { id: user.id, name: user.name };
+  },
 });
 
 const port = Number(process.env["PORT"] ?? 8201);

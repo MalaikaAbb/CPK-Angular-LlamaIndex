@@ -24,14 +24,18 @@ import { Callout, Panel, SourceCode, TryIt } from '../components/ui';
           <code>/api/copilotkit/info</code> lists <code>my_agent</code>, and
           the LlamaIndex terminal for a run error.
         </p>
-        <p class="mt-2 text-slate-700">
-          <strong>Also check:</strong> whether <code>resources</code> reaches
-          the browser. The guide calls it internal, but its
-          <code>answerQuestion</code> emits the whole <code>state</code> dict
-          as a snapshot, so if the agent called <code>addResource</code> first,
-          the list may be in that snapshot.
-        </p>
       </ui-try-it>
+
+      <ui-callout tone="warn" title="Doc discrepancy — resources reaches the browser">
+        The guide says <code>resources</code> is internal and not accessible
+        to the UI. In a verified run (12 Oct 2026) the agent called
+        <code>addResource</code> and the router immediately sent a state
+        snapshot containing <code>resources</code> to the browser, before
+        <code>answerQuestion</code> ran; <code>answerQuestion</code>'s own
+        snapshot carried it again. The guide's code is kept as published —
+        nothing in it filters <code>resources</code> out of the snapshots,
+        so the claim does not hold.
+      </ui-callout>
 
       <ui-panel heading="1 · The agent and its state (backend)">
         <p class="text-sm text-slate-700">
@@ -39,7 +43,8 @@ import { Callout, Panel, SourceCode, TryIt } from '../components/ui';
           <code>agent.py</code> up to and including its router:
           <code>answerQuestion</code> writes <code>answer</code> and emits a
           state snapshot, <code>addResource</code> appends to
-          <code>resources</code> without one, and the router starts from the
+          <code>resources</code> without emitting one itself (the router still
+          sends a snapshot after the tool runs), and the router starts from the
           guide's <code>initial_state</code>. The guide's own FastAPI app,
           <code>/health</code> route and <code>__main__</code> block are left
           out; <code>backend/main.py</code> mounts the router on the existing
