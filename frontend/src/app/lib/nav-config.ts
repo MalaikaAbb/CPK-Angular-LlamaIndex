@@ -243,9 +243,9 @@ export const NAV: NavGroup[] = [
         docPath: '/angular/llamaindex/shared-state/workflow-execution',
         summary:
           'An agent whose state splits into question (set by the UI), answer (returned to it), and resources (kept inside the agent).',
-        status: 'partial',
+        status: 'working',
         statusNote:
-          'Routing and state are verified: the agent receives the question from frontend state. The answerQuestion path is not yet verified end to end — the test run stopped on an invalid OpenAI key.',
+          'Works as published: answerQuestion writes answer and it reaches the UI. Doc discrepancy: the guide calls resources internal, but the router\'s state snapshot after addResource carries resources to the browser — see the route page.',
       },
     ],
   },

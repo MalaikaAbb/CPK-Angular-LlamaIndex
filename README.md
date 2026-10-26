@@ -150,7 +150,7 @@ in `frontend/src/app/app.config.ts`; change it there if you move the runtime.
 | `/headless` | Working | |
 | `/webmcp` | Partial | Agent path runs anywhere; browser-agent path needs Chrome 149+ with WebMCP enabled. See the WebMCP notes below. |
 | `/subagents` | Partial | Implemented as published; not yet verified end to end. See the Sub-Agents doc gaps below. |
-| `/workflow-execution` | Partial | Routing and state verified; the `answerQuestion` path is unverified (test run stopped on an invalid OpenAI key). Served as `my_agent` from `/workflow-execution` on the existing server, not the guide's standalone app. |
+| `/workflow-execution` | Working | Works as published, served as `my_agent` from `/workflow-execution` on the existing server. Doc discrepancy: the guide calls `resources` internal, but the state snapshot sent after `addResource` carries it to the browser. |
 
 ## Known issues
 
